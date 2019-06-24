@@ -3,23 +3,24 @@ if(isset($_GET["id"])){
     $id= $_GET["id"];
 
     require "connect.php";
-    $sql="SELECT task_id FROM tasks WHERE task_id = $id";
+    $sql="SELECT * FROM tasks WHERE task_id = $id";
     $result = mysqli_query($connect,$sql);
     $row= mysqli_fetch_assoc($result);
     extract($row);
 
 }
-if(isset($_POST["task"])){
-    $task=$_REQUEST["task"];
+if(isset($_POST["task_name"])){
+
+    $task_name=$_REQUEST["task_name"];
     $status=$_REQUEST["status"];
-    $date= $_REQUEST["date"];
+    $date_to_do= $_REQUEST["date_to_do"];
     $id= $_REQUEST["id"];
 
     require 'connect.php';
 
-    $sql1= "UPDATE `tasks` SET `task_id`=$id,`task_name`=$task,`date_to_do`=$date,`status`=$status WHERE task_id=$id";
+    $sql1= "UPDATE tasks set task_name='$task_name',date_to_do='$date_to_do',status='$status' where task_id='$id'";
     mysqli_query($connect,$sql1) or die(mysqli_error($connect));
-    // header("location:task.php");
+    header("location:task.php");
 }
 
 ?>
@@ -37,25 +38,26 @@ if(isset($_POST["task"])){
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 </head>
-<body>
+<body class="bg-dark" style="font-family: 'Droid Sans'">
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-sm-6">
-            <div class="card">
-                <div class="card-header text-center">Update task</div>
+            <div class="card border border-warning">
+                <div class="card-header text-center"><h3 style="font-family: 'Orator Std'">update <?=$task_name?></h3> </div>
                 <div class="card-body">
                     <form class="form" action="update.php" method="post" enctype="multipart/form-data">
-                        <input type="hidden" value="<?=$id?>" class="form-control">
+                        <input type="hidden" value="<?=$id?>">
                         <div class="form-group">
-                            <label for="task">Task</label>
-                            <input type="text" value="<?=$task?>" class="form-control" name="task" id="task" >
+                            <label for="date">task name</label>
+                            <input  type="text" value="<?=$task_name?>" class="form-control" name="task_name" id="date" >
                         </div>
                         <div class="form-group">
                             <label for="date">Date to do</label>
-                            <input  type="date" value="<?=$date?>" class="form-control" name="date" id="date" >
-                        </div> <div class="form-group">
+                            <input  type="date" value="<?=$date_to_do?>" class="form-control" name="date_to_do" id="date" >
+                        </div>
+                        <div class="form-group">
                             <label for="status">Status</label>
-                            <input  type="text" value="" class="form-control" name="status" id="status">
+                            <input type="text" value="<?=$status?>" class="form-control" name="status" id="status">
                         </div>
                         <button type="submit" class="btn btn-warning btn-block">Update Task</button>
                     </form>

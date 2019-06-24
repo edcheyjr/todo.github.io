@@ -1,14 +1,22 @@
 <?php
+
+
 if(isset($_GET['id']))
 {
     $id= $_GET['id'];
-    //delete
-    require 'connect.php';
-    $sql="DELETE FROM tasks WHERE task_id = $id";
+
+    require "connect.php";
+    $sql="insert into history select * from tasks where task_id=$id";
     mysqli_query($connect,$sql) or die(mysqli_error($connect));
+// update
+    $sql1="update history set status =DEFAULT WHERE task_id=$id";
+    mysqli_query($connect,$sql1) or die(mysqli_error($connect));
 
+    $sql2="delete from history where status='incomplete'";
+    mysqli_query($connect,$sql1) or die(mysqli_error($connect));
+    //delete
+require "delete.php";
 }
-
 if(isset($_GET['date'])){
 
     $date =$_GET['date'];
@@ -24,4 +32,4 @@ if(isset($_GET['date'])){
         mysqli_query($connect,$sql3) or die(mysqli_error($connect));
     }
 }
-header("location:task.php");
+header("location:report.php");

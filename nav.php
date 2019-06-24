@@ -23,7 +23,13 @@
             <li class="nav-item">
                 <a class="nav-link" href="task.php">To Do</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="report.php">History</a>
+            </li>
         </ul>
+    </div>
+    <div class="justify-content-end">
+        <a class="navbar-brand " href="task.php">Task Manager</a>
     </div>
 </nav>
 </body>
